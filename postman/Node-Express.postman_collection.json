@@ -1,0 +1,466 @@
+{
+	"info": {
+		"_postman_id": "dfc33096-005c-46ca-8988-5b5531dffe8f",
+		"name": "Node-Express",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Roles Get",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}roles",
+					"host": [
+						"{{host}}roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Users List",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}users",
+					"host": [
+						"{{host}}users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User get by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}users/3",
+					"host": [
+						"{{host}}users"
+					],
+					"path": [
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Permissions Get",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}permissions",
+					"host": [
+						"{{host}}permissions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Role Add",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"role_name\": \"staff\",\n    \"role_description\": \"Staff\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}roles",
+					"host": [
+						"{{host}}roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Add",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"role_id\": 2,\n    \"email\": \"djam002@yopmail.com\",\n    \"password\": \"qqqq1111\",\n    \"fullname\": \"Djam Yop 2\",\n    \"phone\": \"0900990099\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}users",
+					"host": [
+						"{{host}}users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Permissions to Role",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"permissions\": [16, 17, 18, 19, 20]\n}"
+				},
+				"url": {
+					"raw": "{{host}}roles/permissions/2",
+					"host": [
+						"{{host}}roles"
+					],
+					"path": [
+						"permissions",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Permission Add",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"perm_name\": \"get_products\",\n    \"perm_description\": \"Get List of Products\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}permissions",
+					"host": [
+						"{{host}}permissions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Role Update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"role_name\": \"admin\",\n    \"role_description\": \"Admin Application\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}roles/1",
+					"host": [
+						"{{host}}roles"
+					],
+					"path": [
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"role_id\": 3,\n    \"email\": \"didin@djamware.com\",\n    \"password\": \"qqqq1111\",\n    \"fullname\": \"The Djamware\",\n    \"phone\": \"0998998998\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}users/4",
+					"host": [
+						"{{host}}users"
+					],
+					"path": [
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Permissions Update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"perm_name\": \"get_products\",\n    \"perm_description\": \"Get List of Products\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}permissions/1",
+					"host": [
+						"{{host}}permissions"
+					],
+					"path": [
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Role Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}roles/1",
+					"host": [
+						"{{host}}roles"
+					],
+					"path": [
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}users/2",
+					"host": [
+						"{{host}}users"
+					],
+					"path": [
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Permissions Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}permissions/1",
+					"host": [
+						"{{host}}permissions"
+					],
+					"path": [
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"djam005@yopmail.com\",\n    \"password\": \"q1w2e3r4\",\n    \"fullname\": \"Djam Yop\",\n    \"phone\": \"0877676676\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}auth/signup",
+					"host": [
+						"{{host}}auth"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Signin",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"djam005@yopmail.com\",\n    \"password\": \"q1w2e3r4\"\n}"
+				},
+				"url": {
+					"raw": "{{host}}auth/signin",
+					"host": [
+						"{{host}}auth"
+					],
+					"path": [
+						"signin"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
