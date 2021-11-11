@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models').User;
 const Role = require('../models').Role;
+const Permission = require('../models').Permission;
 const passport = require('passport');
 require('../config/passport')(passport);
 const Helper = require('../utils/helper');
@@ -42,7 +43,19 @@ router.get('/', passport.authenticate('jwt', {
 }), function (req, res) {
   helper.checkPermission(req.user.role_id, 'user_get_all').then((rolePerm) => {
     User
-      .findAll()
+      .findAll({
+        include: [
+          { 
+            model: Role,
+            include: [
+              {
+                model: Permission,
+                as: 'permissions'
+              }
+            ]
+          }
+        ]
+      })
       .then((users) => res.status(200).send(users))
       .catch((error) => {
         res.status(400).send(error);
@@ -73,7 +86,7 @@ router.put('/:id', passport.authenticate('jwt', {
   session: false
 }), function (req, res) {
   helper.checkPermission(req.user.role_id, 'role_update').then((rolePerm) => {
-    if (!req.body.role_id || !req.body.email || !req.body.password || !req.body.fullname || !req.body.phone) {
+    if (!req.body.role_id || !req.body.email || !req.body.fullname || !req.body.phone) {
       res.status(400).send({
         msg: 'Please pass Role ID, email, password, phone or fullname.'
       })
@@ -83,7 +96,6 @@ router.put('/:id', passport.authenticate('jwt', {
         .then((user) => {
           User.update({
             email: req.body.email || user.email,
-            password: req.body.password || user.password,
             fullname: req.body.fullname || user.fullname,
             phone: req.body.phone || user.phone,
             role_id: req.body.role_id || user.role_id

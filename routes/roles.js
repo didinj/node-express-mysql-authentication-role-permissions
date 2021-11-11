@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models').User;
 const Role = require('../models').Role;
 const Permission = require('../models').Permission;
+const RolePermission = require('../models').RolePermission;
 const passport = require('passport');
 require('../config/passport')(passport);
 const Helper = require('../utils/helper');
@@ -25,12 +26,17 @@ router.post('/', passport.authenticate('jwt', {
                 })
                 .then((role) => res.status(201).send(role))
                 .catch((error) => {
-                    console.log(error);
-                    res.status(400).send(error);
+                    res.status(400).send({
+                        success: false,
+                        msg: error
+                    });
                 });
         }
     }).catch((error) => {
-        res.status(403).send(error);
+        res.status(403).send({
+            success: false,
+            msg: error
+        });
     });
 });
 
@@ -42,8 +48,7 @@ router.get('/', passport.authenticate('jwt', {
         console.log(rolePerm);
         Role
             .findAll({
-                include: [
-                    {
+                include: [{
                         model: Permission,
                         as: 'permissions',
                     },
@@ -55,10 +60,16 @@ router.get('/', passport.authenticate('jwt', {
             })
             .then((roles) => res.status(200).send(roles))
             .catch((error) => {
-                res.status(400).send(error);
+                res.status(400).send({
+                    success: false,
+                    msg: error
+                });
             });
     }).catch((error) => {
-        res.status(403).send(error);
+        res.status(403).send({
+            success: false,
+            msg: error
+        });
     });
 });
 
@@ -82,7 +93,10 @@ router.get('/:id', passport.authenticate('jwt', {
         )
         .then((roles) => res.status(200).send(roles))
         .catch((error) => {
-            res.status(400).send(error);
+            res.status(400).send({
+                success: false,
+                msg: error
+            });
         });
 });
 
@@ -110,14 +124,23 @@ router.put('/:id', passport.authenticate('jwt', {
                         res.status(200).send({
                             'message': 'Role updated'
                         });
-                    }).catch(err => res.status(400).send(err));
+                    }).catch(err => res.status(400).send({
+                        success: false,
+                        msg: err
+                    }));
                 })
                 .catch((error) => {
-                    res.status(400).send(error);
+                    res.status(400).send({
+                        success: false,
+                        msg: error
+                    });
                 });
         }
     }).catch((error) => {
-        res.status(403).send(error);
+        res.status(403).send({
+            success: false,
+            msg: error
+        });
     });
 });
 
@@ -151,11 +174,17 @@ router.delete('/:id', passport.authenticate('jwt', {
                     }
                 })
                 .catch((error) => {
-                    res.status(400).send(error);
+                    res.status(400).send({
+                        success: false,
+                        msg: error
+                    });
                 });
         }
     }).catch((error) => {
-        res.status(403).send(error);
+        res.status(403).send({
+            success: false,
+            msg: error
+        });
     });
 });
 
@@ -172,30 +201,48 @@ router.post('/permissions/:id', passport.authenticate('jwt', {
             Role
                 .findByPk(req.params.id)
                 .then((role) => {
-                    req.body.permissions.forEach(function (item, index) {
-                        Permission
-                            .findByPk(item)
-                            .then(async (perm) => {
-                                await role.addPermissions(perm, {
-                                    through: {
-                                        selfGranted: false
-                                    }
+                    RolePermission.destroy({
+                        where: {
+                            role_id: role.id
+                        }
+                    }).then(_ => {
+                        JSON.parse(req.body.permissions).forEach(function (item, index) {
+                            Permission
+                                .findByPk(item)
+                                .then(async (perm) => {
+                                    await role.addPermissions(perm, {
+                                        through: {
+                                            selfGranted: false
+                                        }
+                                    });
+                                })
+                                .catch((error) => {
+                                    res.status(400).send({
+                                        success: false,
+                                        msg: error
+                                    });
                                 });
-                            })
-                            .catch((error) => {
-                                res.status(400).send(error);
-                            });
-                    });
-                    res.status(200).send({
-                        'message': 'Permissions added'
-                    });
+                        });
+                        res.status(200).send({
+                            'message': 'Permissions added'
+                        });
+                    }).catch(err => res.status(400).send({
+                        success: false,
+                        msg: err
+                    }));
                 })
                 .catch((error) => {
-                    res.status(400).send(error);
+                    res.status(400).send({
+                        success: false,
+                        msg: error
+                    });
                 });
         }
     }).catch((error) => {
-        res.status(403).send(error);
+        res.status(403).send({
+            success: false,
+            msg: error
+        });
     });
 });
 

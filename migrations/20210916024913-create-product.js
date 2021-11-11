@@ -9,7 +9,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       prod_name: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       prod_description: {
         type: Sequelize.STRING
